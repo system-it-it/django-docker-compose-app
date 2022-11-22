@@ -1,0 +1,27 @@
+
+version: '3.7'
+
+
+services: 
+  django:
+     build: .
+#     container_name: django
+     command: python manage.py runserver 0.0.0.0:8000
+     volumes: 
+        - .:/usr/src/app
+     ports: 
+        - "8000:8000"
+     depends_on:
+        - pgs
+  pgs:
+     image: postgres:12.0-alpine
+     volumes: 
+       - dbpgs:/var/lib/postgresql/data/
+     environment:
+       - POSTGRES_DB=pg
+       - POSTGRES_USER=pg
+       - POSTGRES_PASSWORD=pg123
+     container_name: psg_db
+  
+volumes:
+    dbpgs:
